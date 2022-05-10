@@ -1,0 +1,128 @@
+@media only screen and (max-width: 1000px) {
+    * {
+        font-size: 2rem;
+    }
+    /* ===========================================================
+                        Navbar
+  ============================================================== */
+
+    .modals {
+        width: 90%;
+    }
+
+    .links {
+        display: none;
+    }
+
+    .nav {
+        display: block;
+        min-height: 10vh;
+        background-color: rgba(207, 183, 132, 1);
+        position: fixed;
+        z-index: 99;
+        top: 0;
+        width: 100%;
+    }
+
+    .nav-links a:hover {
+        font-size: 2.5rem;
+    }
+
+    .hamburger {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-height: 10vh;
+        position: relative;
+    }
+
+    .hamburger .container {
+        position: absolute;
+        right: 1rem;
+        padding: 1rem;
+        border: 0.1rem solid #f7f6f2;
+        width: fit-content;
+    }
+
+    .hamburger .line {
+        height: 0.5vh;
+        width: 4rem;
+        background-color: #f7f6f2;
+        margin-bottom: 0.5rem;
+    }
+
+    .hamburger .links,
+    .links {
+        display: none;
+    }
+
+    .nav-links {
+        display: none;
+        margin-top: 2rem;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .nav-links-display {
+        display: block;
+    }
+
+    .wrapper .my-img {
+        width: 40%;
+    }
+
+    /* ---------------------------------------------- Home page */
+
+    .desc,
+    .footer,
+    .container {
+        width: 100vw;
+    }
+
+    .info-wrapper .my-img {
+        display: block;
+        width: 50%;
+        margin: auto;
+        border-radius: 50%;
+    }
+
+    .cv-download {
+        width: 80%;
+    }
+
+    .section-header {
+        padding-top: 10vh;
+    }
+
+    .project-container .flip-card {
+        margin: 0 auto 2rem;
+    }
+
+    #contacts {
+        margin-bottom: 15vh;
+    }
+
+    .grid-container {
+        display: block;
+    }
+
+    .form-box,
+    .social-links {
+        width: 80%;
+        margin: auto;
+    }
+
+    .social-links li {
+        margin-top: 5rem;
+        text-align: center;
+    }
+
+    .footer {
+        text-align: center;
+    }
+
+    /* -------------------------------------------- Dashboard edit */
+    .editProfile h1 {
+        margin-top: 10vh;
+    }
+}
