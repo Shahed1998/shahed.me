@@ -98,6 +98,7 @@ function sendEmail() {
     }
 }
 
+// ------------------------------------------------- Login validation
 const login = function () {
     const email = $(".loginEmail").val();
     const password = $(".loginPassword").val();
@@ -112,4 +113,54 @@ const login = function () {
         modalMessage("Invalid email");
         return false;
     }
+};
+
+// ------------------------------------------------- Edit validation
+const editValidator = function () {
+    // Name validation
+    const uname = $(".uname").val();
+    if (uname.length == 0) {
+        modalMessage("User name must not be empty");
+        return false;
+    } else if (uname.length < 3) {
+        modalMessage("Invalid username");
+        return false;
+    }
+
+    // Email validation
+    const patternEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const email = $(".dashEmail").val();
+
+    if (email.length == 0) {
+        modalMessage("Email must not be empty");
+        return false;
+    } else if (!patternEmail.test(email)) {
+        modalMessage("Invalid email");
+        return false;
+    }
+
+    // Password validation
+    const password = $(".dashPassword").val();
+
+    if (password.length == 0) {
+        modalMessage("Password must not be empty");
+        return false;
+    }
+
+    // Confirm password validation
+    const newPassword = $(".dashNewPassword").val();
+    const confirmPassword = $(".dashConfirmPassword").val();
+    var passRegex = /^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,16}$/;
+    if (!passRegex.test(newPassword)) {
+        console.log(newPassword);
+        modalMessage(
+            "Password length must be between 6-16 characters long and must contain at least 1 number and special character"
+        );
+        return false;
+    } else if (confirmPassword != newPassword) {
+        modalMessage("Invalid confirm password");
+        return false;
+    }
+
+    return true;
 };
