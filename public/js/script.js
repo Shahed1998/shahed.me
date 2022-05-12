@@ -151,8 +151,7 @@ const editValidator = function () {
     const newPassword = $(".dashNewPassword").val();
     const confirmPassword = $(".dashConfirmPassword").val();
     var passRegex = /^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,16}$/;
-    if (!passRegex.test(newPassword)) {
-        console.log(newPassword);
+    if (newPassword.length > 0 && !passRegex.test(newPassword)) {
         modalMessage(
             "Password length must be between 6-16 characters long and must contain at least 1 number and special character"
         );
@@ -160,6 +159,28 @@ const editValidator = function () {
     } else if (confirmPassword != newPassword) {
         modalMessage("Invalid confirm password");
         return false;
+    }
+
+    // Description validation
+    const description = $(".user_description").val();
+    if (description.length < 1) {
+        modalMessage("User must have a brief description");
+        return false;
+    }
+
+    // Image validation
+    const img = $("#image");
+    if (img[0].files.length > 0) {
+        const pattern = /(.jpg|.png|.jpeg)/;
+        if (!pattern.test(img[0].files[0]["name"])) {
+            modalMessage("Invalid file type");
+            return false;
+        }
+
+        if (img[0].files[0]["size"] > 20000) {
+            modalMessage("File size too big, minimum 20kb");
+            return false;
+        }
     }
 
     return true;
