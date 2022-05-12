@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\UserCredential;
+use Illuminate\Support\Facades\Hash;
 
 class loginController extends Controller
 {
@@ -33,7 +34,7 @@ class loginController extends Controller
         // Check if the user matches
         $user = UserCredential::where('email', $email)->first();
 
-        if(!($user && $user->password == $password)){
+        if(!($user && Hash::check($password, $user->password))){
             $req->session()->flash('loginFailedStatus', 'Failed');
             return back();
         }

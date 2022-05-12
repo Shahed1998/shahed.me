@@ -21,5 +21,6 @@ Route::post('/', [homeController::class, 'postEmail']);
 Route::get('/admin/login', [loginController::class, 'getLogin'])->name('login');
 Route::post('/admin/login', [loginController::class, 'postLogin']);
 Route::get('/admin/dashboard', [dashController::class, 'getDashboard'])->name('dashboard');
-// Route::get('/admin/edit', [dashController::class, 'getEdit'])->name('edit');
+Route::post('/admin/dashboard', [dashController::class, 'postDashboard']);
+Route::get('/admin/gallery', [dashController::class, 'getGallery'])->name('gallery');
 Route::get('/admin/logout', [dashController::class, 'logout'])->name('logout');

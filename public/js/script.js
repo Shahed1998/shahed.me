@@ -81,11 +81,11 @@ function sendEmail() {
                 },
                 statusCode: {
                     200: (result) => {
+                        $("#cname").val("");
+                        $("#email").val("");
+                        $("#subject").val("");
+                        $("#comment").val("");
                         modalMessage(`Message sent`);
-                        $("#cname").value = "";
-                        $("#email").value = "";
-                        $("#subject").value = "";
-                        $("#comment").value = "";
                     },
                     500: (result) => {
                         modalMessage(`Failed to send message`);
