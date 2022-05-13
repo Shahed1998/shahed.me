@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DashNav;
 use App\Models\UserCredential;
+use App\Models\Gallery;
 use Illuminate\Support\Facades\Hash;
 
 class dashController extends Controller
@@ -41,8 +42,19 @@ class dashController extends Controller
         $uid = $req->session()->get('id');
         $userCredential = UserCredential::where('id', $uid)->first();
         if(Hash::check($password, $userCredential->password)){
-            return "matched";
-            // Continue...
+            
+            // Image upload
+            $image = $req->file('image');
+            if($image){
+                $img_name = $image->hashName();
+                $path = $image->storeAs('public/profile_pic', $img_name);
+                Gallery::where('selected', 1)->update(['selected'=>0]);
+                $new_saved_image = new Gallery();
+                $new_saved_image->image_name = $path;
+                $new_saved_image->selected = 1;
+                $new_saved_image->save();
+                return back();
+            }
         }
 
         return redirect()->route('logout');

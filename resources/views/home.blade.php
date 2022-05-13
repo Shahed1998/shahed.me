@@ -10,7 +10,10 @@
 
             <section id="about">
                 <div class="info-wrapper">
-                    <img src="" alt="">
+                    @php 
+                        $profile_pic = str_replace('public/', 'storage/', $profile_pic->image_name);
+                    @endphp
+                    <img src='{{url("$profile_pic")}}' alt="">
                     <h1>{{$name}}</h1>
                     <div class="brief-info">
                         <p>{{$description}}</p>
@@ -70,7 +73,7 @@
                 </div>
             </section>
         </div>
+        
     </div>
-
     @include('includes.footer')
 @endsection
