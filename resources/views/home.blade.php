@@ -14,7 +14,7 @@
                         $profile_pic = str_replace('public/', 'storage/', $profile_pic);
                         $cv = str_replace('public/', 'storage/', $cv);
                     @endphp
-                    <img src='{{url("$profile_pic")}}' alt="">
+                    <img src='{{url("$profile_pic")}}' alt="" class="my-img">
                     <h1>{{$name}}</h1>
                     <div class="brief-info">
                         <p>{{$description}}</p>

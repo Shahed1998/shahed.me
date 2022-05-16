@@ -36,7 +36,6 @@ class dashController extends Controller
         $userCredential = UserCredential::where('id', $uid)->first();
         if($userCredential && Hash::check($password, $userCredential->password)){
             try{
-
                 // Image upload
                 $image = $req->file('image');
                 if($image){
@@ -67,6 +66,12 @@ class dashController extends Controller
                 $description = $req->description;
                 UserCredential::where('id', $uid)->update(['email'=>$email]);
                 UserInfo::where('uc_id', $uid)->update(['name'=>$uname, 'description'=>$description]);
+
+                // update new password
+                $newPass = $req->new_password;
+                if($newPass){
+                    UserCredential::where('id', $uid)->update(['password'=>Hash::make($newPass)]);
+                }
                 
                 $req->session()->flash('status', 'successful');
                 return back();
@@ -78,5 +83,10 @@ class dashController extends Controller
         }
 
         return redirect()->route('logout');
+    }
+
+    // Get messages
+    public function getMessages(){
+        return "All messages";
     }
 }

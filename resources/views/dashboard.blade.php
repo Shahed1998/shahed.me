@@ -1,6 +1,20 @@
 @extends('layouts.adminLayout')
 @section('content')
     @include('includes.modal')
+    <script>
+        function modalMessage(msg) {
+            document.querySelector(".modals-message").innerHTML = "<p>" + msg + "</p>";
+            document.querySelector(".modals-bg").classList.add("bg-active");
+        }
+    </script>
+    @if(Session::get('status') == 'successful')
+        <script>modalMessage("Successfully updated info.");</script>
+    @endif
+
+    @if(Session::get('status') == 'failed')
+        <script>modalMessage("Failed to update info.");</script>
+    @endif
+
     @include('includes.dashNav')
     <div class="desc editProfile">
         <h1 class="d-flex justify-content-center align-items-center shadow p-5 mb-5 bg-body rounded">Edit profile</h1>
