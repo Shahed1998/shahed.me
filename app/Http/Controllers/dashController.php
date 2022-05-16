@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DashNav;
 use App\Models\UserCredential;
-use App\Models\Gallery;
+use App\Models\UserInfo;
 use Illuminate\Support\Facades\Hash;
+use Storage;
 
 class dashController extends Controller
 {
@@ -17,7 +18,6 @@ class dashController extends Controller
 
     public function getDashboard(Request $req){
         $links = DashNav::all();
-        // return UserCredential::all()->first();
         $userCredential = UserCredential::all()->first();
         return view('dashboard')
         ->with('links', $links)
@@ -30,36 +30,53 @@ class dashController extends Controller
     }
 
     public function postDashboard(Request $req){
-        // return $req->file('image');
-        // checks if the password matches
-        // $password = $req->password;
-        // UserCredential::where('id', 1)->update(['password'=>Hash::make($password)]);
-        // $savePassword->email = $req->email;
-        // $savePassword->password = Hash::make($password);
-        // $savePassword->save();
         // ------------------------------- initial saved password: qwerty1@3 
         $password = $req->password;
         $uid = $req->session()->get('id');
         $userCredential = UserCredential::where('id', $uid)->first();
-        if(Hash::check($password, $userCredential->password)){
-            
-            // Image upload
-            $image = $req->file('image');
-            if($image){
-                $img_name = $image->hashName();
-                $path = $image->storeAs('public/profile_pic', $img_name);
-                Gallery::where('selected', 1)->update(['selected'=>0]);
-                $new_saved_image = new Gallery();
-                $new_saved_image->image_name = $path;
-                $new_saved_image->selected = 1;
-                $new_saved_image->save();
+        if($userCredential && Hash::check($password, $userCredential->password)){
+            try{
+
+                // Image upload
+                $image = $req->file('image');
+                if($image){
+                    $img_name = $image->hashName();
+                    $db_image = UserInfo::where('uc_id', $uid)->first()->image;
+                    if($db_image){
+                        Storage::delete("$db_image");
+                    }
+                    $path = $image->storeAs('public/uploads', $img_name);
+                    UserInfo::where('uc_id', $uid)->update(['image'=>$path]);
+                }
+
+                // CV upload
+                $cv = $req->file('cv');
+                if($cv){
+                    $cv_name = $cv->hashName();
+                    $db_cv = UserInfo::where('uc_id', $uid)->first()->cv;
+                    if($db_cv){
+                        Storage::delete("$db_cv");
+                    }
+                    $path = $cv->storeAs('public/uploads', $cv_name);
+                    UserInfo::where('uc_id', $uid)->update(['cv'=>$path]);
+                }
+
+                // Update name, email, description
+                $uname = $req->uname;
+                $email = $req->email;
+                $description = $req->description;
+                UserCredential::where('id', $uid)->update(['email'=>$email]);
+                UserInfo::where('uc_id', $uid)->update(['name'=>$uname, 'description'=>$description]);
+                
+                $req->session()->flash('status', 'successful');
+                return back();
+
+            }catch(\Exception $e){
+                $req->session()->flash('status', 'failed');
                 return back();
             }
         }
 
         return redirect()->route('logout');
-        
-        
-        
     }
 }

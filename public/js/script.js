@@ -183,5 +183,17 @@ const editValidator = function () {
         }
     }
 
+    // CV validation
+    const cv = $("#cv");
+    if (cv[0].files.length > 0) {
+        const pattern = /(.pdf|.doc|.docx)/;
+        if (!pattern.test(cv[0].files[0]["name"])) {
+            modalMessage(
+                "Invalid file type, CV must be of extension .pdf or .doc or .docx"
+            );
+            return false;
+        }
+    }
+
     return true;
 };

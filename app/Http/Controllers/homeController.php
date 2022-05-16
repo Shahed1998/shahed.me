@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\UserCredential;
 use App\Models\UserProjects;
 use App\Models\UserEmail;
-use App\Models\Gallery;
 
 class homeController extends Controller
 {
@@ -14,14 +13,16 @@ class homeController extends Controller
         $user_info = UserCredential::all()->first()->userInfo;
         $user_links = UserCredential::all()->first()->homeLinkModel;
         $user_projects =  UserProjects::paginate(4)->fragment('projects');
-        $profile_pic = Gallery::where('selected', 1)->first();
+        $profile_pic = UserCredential::all()->first()->userInfo->image;
+        $cv = UserCredential::all()->first()->userInfo->cv;
 
         return view('home')
         ->with('name', $user_info->name)
         ->with('description', $user_info->description)
         ->with('links', $user_links)
         ->with('user_projects', $user_projects)
-        ->with('profile_pic', $profile_pic); 
+        ->with('profile_pic', $profile_pic)
+        ->with('cv', $cv); 
     }
 
     public function postEmail(Request $req){

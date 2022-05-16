@@ -51,10 +51,16 @@
                             <textarea name="description" id="description" rows="5" class="user_description form-control form-control-lg py-4 fs-4">{{$userCredential->userInfo->description}}</textarea>
                     </div>
 
-                    <!-- Description text -->
+                    <!-- upload image -->
                     <div class="form-outline mb-3">
                         <label class="form-label" for="image">Upload image</label>
                         <input type="file" name="image" id="image" class="user_image form-control form-control-lg py-4 fs-4">
+                    </div>
+
+                    <!-- upload CV -->
+                    <div class="form-outline mb-3">
+                        <label class="form-label" for="cv">Upload CV</label>
+                        <input type="file" name="cv" id="cv" class="user_cv form-control form-control-lg py-4 fs-4">
                     </div>
                 </form>
 

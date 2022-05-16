@@ -11,14 +11,15 @@
             <section id="about">
                 <div class="info-wrapper">
                     @php 
-                        $profile_pic = str_replace('public/', 'storage/', $profile_pic->image_name);
+                        $profile_pic = str_replace('public/', 'storage/', $profile_pic);
+                        $cv = str_replace('public/', 'storage/', $cv);
                     @endphp
                     <img src='{{url("$profile_pic")}}' alt="">
                     <h1>{{$name}}</h1>
                     <div class="brief-info">
                         <p>{{$description}}</p>
                         <p>
-                            <a href="" class="cv-download" download="Shahed's Demo CV">
+                            <a href='{{asset("$cv")}}' class="cv-download" download="Shahed's Demo CV">
                                 <i class="fa fa-download"></i> Download CV
                             </a>
                         </p>
