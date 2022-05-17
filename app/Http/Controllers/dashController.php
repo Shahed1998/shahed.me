@@ -8,6 +8,7 @@ use App\Models\UserCredential;
 use App\Models\UserInfo;
 use Illuminate\Support\Facades\Hash;
 use Storage;
+use App\Models\UserEmail;
 
 class dashController extends Controller
 {
@@ -87,6 +88,11 @@ class dashController extends Controller
 
     // Get messages
     public function getMessages(){
-        return "All messages";
+        // newer messages first
+        $email = UserEmail::orderByDesc('id')->paginate(10);
+        $links = DashNav::all();
+        return view('messages')
+        ->with('links', $links)
+        ->with('email', $email);
     }
 }
