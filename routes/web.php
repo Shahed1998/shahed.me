@@ -24,3 +24,9 @@ Route::get('/admin/dashboard', [dashController::class, 'getDashboard'])->name('d
 Route::post('/admin/dashboard', [dashController::class, 'postDashboard'])->middleware('xss-sanitizer');
 Route::get('/admin/logout', [dashController::class, 'logout'])->name('logout');
 Route::get('/admin/messages', [dashController::class, 'getMessages'])->name('messages');
+Route::get('/admin/messages/new', [dashController::class, 'getNewMessages'])->name('newMessages');
+Route::get('/admin/messages/deleteAll', [dashController::class, 'deleteAllMessages'])->name("dltAllMsg");
+Route::get('/admin/messages/delete/{id}', [dashController::class, 'dltOneMsg'])->name('dltOneMsg');
+Route::get('/admin/messages/{id}', function($id){
+    return $id;
+})->name('viewOnePage');

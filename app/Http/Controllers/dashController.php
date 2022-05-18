@@ -90,9 +90,34 @@ class dashController extends Controller
     public function getMessages(){
         // newer messages first
         $email = UserEmail::orderByDesc('id')->paginate(10);
+        $totalNewMessages = UserEmail::where('seen', 0)->count();
         $links = DashNav::all();
         return view('messages')
         ->with('links', $links)
-        ->with('email', $email);
+        ->with('email', $email)
+        ->with('totalNewMessages', $totalNewMessages);
+    }
+
+    // Get new messages
+    public function getNewMessages(){
+        $email = UserEmail::where('seen', 0)->orderByDesc('id')->paginate(10);
+        $totalNewMessages = UserEmail::where('seen', 0)->count();
+        $links = DashNav::all();
+        return view('messages')
+        ->with('links', $links)
+        ->with('email', $email)
+        ->with('totalNewMessages', $totalNewMessages);
+    }
+
+    // Delete all messages
+    public function deleteAllMessages(Request $req){
+        UserEmail::truncate();
+        return redirect()->route('messages');
+    }
+
+    // Delete one message
+    public function dltOneMsg($id){
+        UserEmail::where('id', $id)->delete();
+        return redirect()->route('messages');
     }
 }
