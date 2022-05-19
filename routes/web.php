@@ -27,6 +27,4 @@ Route::get('/admin/messages', [dashController::class, 'getMessages'])->name('mes
 Route::get('/admin/messages/new', [dashController::class, 'getNewMessages'])->name('newMessages');
 Route::get('/admin/messages/deleteAll', [dashController::class, 'deleteAllMessages'])->name("dltAllMsg");
 Route::get('/admin/messages/delete/{id}', [dashController::class, 'dltOneMsg'])->name('dltOneMsg');
-Route::get('/admin/messages/{id}', function($id){
-    return $id;
-})->name('viewOnePage');
+Route::get('/admin/messages/{id}', [dashController::class, 'viewOneMsg'])->name('viewOnePage');

@@ -14,7 +14,6 @@
         <div class="table-responsive">
         <table class="table table-hover">
             <thead>
-                <!-- <th></th> -->
                 <th>Email</th>
                 <th>Message</th>
                 <th></th>
@@ -24,8 +23,7 @@
                 @csrf
                 @method('DELETE')
                 @foreach($email as $message)
-                    <tr value="{{$message->id}}">
-                        <!-- <td><input class="form-check-input" type="checkbox" name="mailID[]" value="{{$message->id}}" onclick="ajaxCheckbox()"></td> -->
+                    <tr>
                         @php
                             $userMail = $message->email;
                             if(strlen($userMail) > 5){
@@ -33,7 +31,7 @@
                             }
                         @endphp
     
-                        <td><a href="{{route('viewOnePage', ['id'=>$message->id])}}">{{$userMail}}</a></td>
+                        <td><a href="{{route('viewOnePage', ['id'=>encrypt($message->id)])}}">{{$userMail}}</a></td>
                         
                         @php
                             $messageTable = $message->comment;
@@ -42,8 +40,8 @@
                             }
                         @endphp
                         
-                        <td><a href="{{route('viewOnePage', ['id'=>$message->id])}}">{{$messageTable}}</a></td>
-                        <td><a href="{{route('dltOneMsg', ['id'=>$message->id])}}" class="link-danger"><i class="fa-solid fa-trash-can"></i></a></td>
+                        <td><a href="{{route('viewOnePage', ['id'=>encrypt($message->id)])}}">{{$messageTable}}</a></td>
+                        <td><a href="{{route('dltOneMsg', ['id'=>encrypt($message->id)])}}" class="link-danger"><i class="fa-solid fa-trash-can"></i></a></td>
                     </tr>
                 @endforeach
                 </form>

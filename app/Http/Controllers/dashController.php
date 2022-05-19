@@ -117,7 +117,18 @@ class dashController extends Controller
 
     // Delete one message
     public function dltOneMsg($id){
-        UserEmail::where('id', $id)->delete();
+        UserEmail::where('id', decrypt($id))->delete();
         return redirect()->route('messages');
+    }
+
+    // View one message
+    public function viewOneMsg($id){
+        $mailID = decrypt($id);
+        $mailInfo = UserEmail::where('id', $mailID)->first();
+        UserEmail::where('id', $mailID)->update(['seen'=>1]);
+        $links = DashNav::all();
+        return view('viewOneMessage')
+        ->with('links', $links)
+        ->with('mailInfo', $mailInfo);
     }
 }

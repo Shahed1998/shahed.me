@@ -508,3 +508,8 @@ button.btn-green {
 .editProfile h1 {
     padding: 2rem;
 }
+
+.emailReplyHeader {
+    /* background-color: var(--color-blue); */
+    background-color: red;
+}
