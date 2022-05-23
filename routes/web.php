@@ -28,3 +28,4 @@ Route::get('/admin/messages/new', [dashController::class, 'getNewMessages'])->na
 Route::get('/admin/messages/deleteAll', [dashController::class, 'deleteAllMessages'])->name("dltAllMsg");
 Route::get('/admin/messages/delete/{id}', [dashController::class, 'dltOneMsg'])->name('dltOneMsg');
 Route::get('/admin/messages/{id}', [dashController::class, 'viewOneMsg'])->name('viewOnePage');
+Route::post('/admin/messages/{id}', [dashController::class, 'sendMail']);

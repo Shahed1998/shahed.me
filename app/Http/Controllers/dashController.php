@@ -7,8 +7,10 @@ use App\Models\DashNav;
 use App\Models\UserCredential;
 use App\Models\UserInfo;
 use Illuminate\Support\Facades\Hash;
-use Storage;
 use App\Models\UserEmail;
+use App\Mail\SendEmail;
+use Illuminate\Support\Facades\Mail;
+use Storage;
 
 class dashController extends Controller
 {
@@ -130,5 +132,21 @@ class dashController extends Controller
         return view('viewOneMessage')
         ->with('links', $links)
         ->with('mailInfo', $mailInfo);
+    }
+
+    // send mail
+    public function sendMail(Request $req){
+        $subject = $req->subject;
+        $body = $req->body;
+        $mailTo = $req->mailTo;
+
+        if(Mail::to("$mailTo")->send(new SendEmail($subject, $body))){
+            $req->session()->flash('emailed', 'successful');
+            return back();
+        }else{
+            $req->session()->flash('emailed', 'failed');
+            return back();
+        }
+
     }
 }
