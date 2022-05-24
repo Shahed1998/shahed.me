@@ -29,3 +29,6 @@ Route::get('/admin/messages/deleteAll', [dashController::class, 'deleteAllMessag
 Route::get('/admin/messages/delete/{id}', [dashController::class, 'dltOneMsg'])->name('dltOneMsg');
 Route::get('/admin/messages/{id}', [dashController::class, 'viewOneMsg'])->name('viewOnePage');
 Route::post('/admin/messages/{id}', [dashController::class, 'sendMail']);
+Route::get('/admin/projects', [dashController::class, 'getProjects'])->name('projects');
+Route::get('/admin/project/{id}', [dashController::class, 'deleteProject'])->name('deleteProject');
+Route::get('/admin/project/edit/{id}', [dashController::class,'editProject'])->name('editProject');

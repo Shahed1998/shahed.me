@@ -9,6 +9,7 @@ use App\Models\UserInfo;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserEmail;
 use App\Mail\SendEmail;
+use App\Models\UserProjects;
 use Illuminate\Support\Facades\Mail;
 use Storage;
 
@@ -149,4 +150,29 @@ class dashController extends Controller
         }
 
     }
+
+    // get project
+    public function getProjects(Request $req){
+        $links = DashNav::all();
+        $projects = UserProjects::orderByDesc('id')->paginate(10);
+        $totalProjects = UserProjects::all()->count();
+        return view('projects')
+        ->with('links', $links)
+        ->with('projects', $projects)
+        ->with('total_projects', $totalProjects);
+    } 
+
+    // edit project
+    public function editProject($id){
+        return decrypt($id);
+    }
+
+    // delete project
+    public function deleteProject($id){
+        $projectID = decrypt($id);
+        UserProjects::where('id', $projectID)->delete();
+        return back();
+    }
+
+
 }
