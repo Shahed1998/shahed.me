@@ -197,3 +197,14 @@ const editValidator = function () {
 
     return true;
 };
+
+// ----------------------------------- Project form
+const projectForm = () => {
+    const projName = $("#projName").val();
+    const projLink = $("#projLink").val();
+
+    if (!projName || !projLink) {
+        modalMessage("Fill up all the fields");
+        return false;
+    }
+};

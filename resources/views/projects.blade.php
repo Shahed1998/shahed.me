@@ -6,7 +6,7 @@
         <h1 class="d-flex justify-content-center align-items-center shadow p-5 mb-5 bg-body rounded">Projects</h1>
         <div class="w-100 p-5 d-flex align-items-end justify-content-end">
             <div class="inner">
-                <a href="{{route('messages')}}" class="d-block p-3"><i class="fa-solid fa-circle-plus"></i> Add new project</a>
+                <a href="{{route('newProject')}}" class="d-block p-3"><i class="fa-solid fa-circle-plus"></i> Add new project</a>
             </div>
         </div>
         <div class="table-responsive">

@@ -51,9 +51,9 @@
                     placeholder="Enter password" />
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center">
+                <!-- <div class="d-flex justify-content-between align-items-center">
                     <a href="#!" class="text-body">Forgot password?</a>
-                </div>
+                </div> -->
             </form>
             <div class="text-center text-lg-start mt-4 pt-2">
                     <button type="submit" class="btn btn-primary btn-lg"

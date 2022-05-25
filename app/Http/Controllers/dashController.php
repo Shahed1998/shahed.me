@@ -164,7 +164,11 @@ class dashController extends Controller
 
     // edit project
     public function editProject($id){
-        return decrypt($id);
+        $links = DashNav::all();
+        $projects = UserProjects::where('id', decrypt($id))->first();
+        return view('editProject')
+        ->with('links', $links)
+        ->with('projects', $projects);
     }
 
     // delete project
@@ -174,5 +178,40 @@ class dashController extends Controller
         return back();
     }
 
+    // add new project
+    public function addNewProject(){
+        $links = DashNav::all();
+        return view('newProject')
+        ->with('links', $links);
+    }
+
+    // edit project
+    public function putEditProject(Request $req, $id){
+        try{
+            UserProjects::where('id', decrypt($id))
+            ->update(['name'=>$req->projName, 'link'=>$req->projLink]);
+            $req->session()->flash('editProj', 'successful');
+            return back();
+        }catch(\Exception $e){
+            $req->session()->flash('editProj', 'failed');
+            return back();
+        }
+        
+    }
+
+    // add new project
+    public function postNewProject(Request $req){
+        try{
+            $user_project = new UserProjects();
+            $user_project->name = $req->projName;
+            $user_project->link = $req->projLink;
+            $user_project->uc_id = $req->session()->get('id');
+            $user_project->save();
+            return redirect()->route('projects');
+        }catch(\Exception $e){
+            $req->session()->flash('editProj', 'failed');
+            return back();
+        }
+    }
 
 }
