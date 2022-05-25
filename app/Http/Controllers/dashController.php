@@ -20,12 +20,8 @@ class dashController extends Controller
        $this->middleware('idChecker');
     }
 
-    public function getDashboard(Request $req){
-        $links = DashNav::all();
-        $userCredential = UserCredential::all()->first();
-        return view('dashboard')
-        ->with('links', $links)
-        ->with('userCredential', $userCredential);
+    public function dashNav(){
+        return DashNav::all();
     }
 
     public function logout(Request $req){
@@ -33,7 +29,20 @@ class dashController extends Controller
         return redirect()->route('login');
     }
 
-    public function postDashboard(Request $req){
+    // -------------------------------------------------------------
+
+    //                     Dashboard edit
+
+    // -------------------------------------------------------------
+
+    public function getDashboard(Request $req){
+        $userCredential = UserCredential::all()->first();
+        return view('dashboard')
+        ->with('links', $this->dashNav())
+        ->with('userCredential', $userCredential);
+    }
+
+    public function updateProfile(Request $req){
         // ------------------------------- initial saved password: qwerty1@3 
         $password = $req->password;
         $uid = $req->session()->get('id');
@@ -89,14 +98,18 @@ class dashController extends Controller
         return redirect()->route('logout');
     }
 
-    // Get messages
+    // -------------------------------------------------------------
+
+    //                     Message
+
+    // -------------------------------------------------------------
+
     public function getMessages(){
         // newer messages first
         $email = UserEmail::orderByDesc('id')->paginate(10);
         $totalNewMessages = UserEmail::where('seen', 0)->count();
-        $links = DashNav::all();
         return view('messages')
-        ->with('links', $links)
+        ->with('links', $this->dashNav())
         ->with('email', $email)
         ->with('totalNewMessages', $totalNewMessages);
     }
@@ -105,9 +118,8 @@ class dashController extends Controller
     public function getNewMessages(){
         $email = UserEmail::where('seen', 0)->orderByDesc('id')->paginate(10);
         $totalNewMessages = UserEmail::where('seen', 0)->count();
-        $links = DashNav::all();
         return view('messages')
-        ->with('links', $links)
+        ->with('links', $this->dashNav())
         ->with('email', $email)
         ->with('totalNewMessages', $totalNewMessages);
     }
@@ -129,9 +141,8 @@ class dashController extends Controller
         $mailID = decrypt($id);
         $mailInfo = UserEmail::where('id', $mailID)->first();
         UserEmail::where('id', $mailID)->update(['seen'=>1]);
-        $links = DashNav::all();
         return view('viewOneMessage')
-        ->with('links', $links)
+        ->with('links', $this->dashNav())
         ->with('mailInfo', $mailInfo);
     }
 
@@ -151,23 +162,27 @@ class dashController extends Controller
 
     }
 
+    // -------------------------------------------------------------
+
+    //                     Project
+
+    // -------------------------------------------------------------
+
     // get project
     public function getProjects(Request $req){
-        $links = DashNav::all();
         $projects = UserProjects::orderByDesc('id')->paginate(10);
         $totalProjects = UserProjects::all()->count();
         return view('projects')
-        ->with('links', $links)
+        ->with('links', $this->dashNav())
         ->with('projects', $projects)
         ->with('total_projects', $totalProjects);
     } 
 
-    // edit project
+    // get edit project
     public function editProject($id){
-        $links = DashNav::all();
         $projects = UserProjects::where('id', decrypt($id))->first();
         return view('editProject')
-        ->with('links', $links)
+        ->with('links', $this->dashNav())
         ->with('projects', $projects);
     }
 
@@ -180,12 +195,11 @@ class dashController extends Controller
 
     // add new project
     public function addNewProject(){
-        $links = DashNav::all();
         return view('newProject')
-        ->with('links', $links);
+        ->with('links', $this->dashNav());
     }
 
-    // edit project
+    // put edit project
     public function putEditProject(Request $req, $id){
         try{
             UserProjects::where('id', decrypt($id))

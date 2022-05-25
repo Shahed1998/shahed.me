@@ -22,6 +22,7 @@
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                 <form onsubmit="return editValidator()" id="loginForm" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method("PUT")
                     <!-- Name input -->
                     <div class="form-outline mb-4">
                         <label class="form-label" for="user_name">Name</label>

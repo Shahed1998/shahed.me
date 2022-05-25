@@ -1,4 +1,4 @@
-@extends('layouts.structureLayout')
+@extends('layouts.adminLayout')
 @section('content')
 
     @include('includes.preloader')

@@ -13,7 +13,7 @@ class loginController extends Controller
         if($req->session()->has('id')){
             return redirect()->route('dashboard');
         }
-
+        
         return view('login');
     }
 

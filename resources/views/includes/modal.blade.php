@@ -6,3 +6,14 @@
         </div>
     </div>
 </div>
+<script>
+    function closeModal() {
+        const modalBg = document.querySelector(".modals-bg");
+        modalBg.classList.remove("bg-active");
+    }
+
+    function modalMessage(msg) {
+        document.querySelector(".modals-message").innerHTML = "<p>" + msg + "</p>";
+        document.querySelector(".modals-bg").classList.add("bg-active");
+    }
+</script>
